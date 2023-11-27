@@ -315,32 +315,53 @@ function generate_infeasibility_error_plot(solver_output, plot_path::String)
     tickfont = fntsm,
     legendfont = fntsm,
   )
-  plot(
-    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_difference,
-    line = (2, :solid),
-    label = "Difference",
+  difference_data =
+    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_difference
+  first_detection = minimum(values(solver_output.first_infeasibility_detection))
+  x_limit = min(2 * first_detection, length(difference_data))
+  selected_marker_indices =
+    round.(Int, range(1, stop = x_limit, length = 14))
+
+    # Plotting for "Difference" with markers
+
+  plot(difference_data, line = (2, :solid), label = "", color = 4)
+    scatter!(
+    selected_marker_indices,
+    difference_data[selected_marker_indices],
+        label = "Difference",
+      marker = (:hexagon, 4),
+    line = (0, :solid),
     color = 4,
   )
-  plot!(
-    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_normalized_average,
-    line = (2, :solid),
-    label = "Normalized average",
+
+  # Plotting for "Normalized average" with markers
+  norm_avg_data =
+    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_normalized_average
+  plot!(norm_avg_data, line = (2, :dot), label = "", color = 1)
+    scatter!(
+    selected_marker_indices,
+    norm_avg_data[selected_marker_indices],
+        label = "Normalized average",
+    marker = (:circle, 4),
+    line = (0, :dot),
     color = 1,
   )
-  plot!(
-    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_normalized_current,
-    line = (2, :solid),
-    label = "Normalized iterate",
+
+  # Plotting for "Normalized iterate" with markers
+  norm_iterate_data =
+    solver_output.iteration_stats.max_scaled_primal_certificate_error_of_normalized_current
+  plot!(norm_iterate_data, line = (2, :dashdot), label = "", color = 2)
+  scatter!(
+    selected_marker_indices,
+    norm_iterate_data[selected_marker_indices],
+      label = "Normalized iterate",
+    marker = (:square, 4),
+    line = (0, :dashdot),
     color = 2,
   )
-  first_detection = minimum(values(solver_output.first_infeasibility_detection))
-  x_limit = min(
-    2 * first_detection,
-    length(
-      solver_output.iteration_stats.max_scaled_primal_certificate_error_of_difference,
-    ),
-  )
-  if solver_output.last_active_set_change < x_limit
+
+  # Other existing plot configurations
+    if solver_output.last_active_set_change < x_limit
     plot!(
       [solver_output.last_active_set_change],
       seriestype = :vline,
