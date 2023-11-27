@@ -73,14 +73,14 @@ function generate_component_wise_plots(
   plot!(
     [primal_iterates[j][2] for j in 1:length(primal_iterates)],
     label = L"x_1",
-    line = (3, :solid),
+    line = (3, :dot),
     color = colors[2],
   )
   if length(primal_iterates[1]) > 2
     plot!(
       [primal_iterates[j][3] for j in 1:length(primal_iterates)],
       label = L"x_2",
-      line = (3, :solid),
+      line = (3, :dashdot),
       color = colors[3],
     )
   end
@@ -98,14 +98,14 @@ function generate_component_wise_plots(
   plot!(
     [dual_iterates[j][2] for j in 1:length(dual_iterates)],
     label = L"y_1",
-    line = (3, :solid),
+    line = (3, :dot),
     color = colors[2],
   )
   if length(dual_iterates[1]) > 2
     plot!(
       [dual_iterates[j][3] for j in 1:length(dual_iterates)],
       label = L"y_2",
-      line = (3, :solid),
+      line = (3, :dashdot),
       color = colors[3],
     )
   end
