@@ -110,9 +110,10 @@ $ julia --project=formatter -e 'using JuliaFormatter; format(".")'
 
 ## References
 
-\[1\]: David Applegate, Mateo Díaz, Haihao Lu, and Miles Lubin. "Infeasibility
-detection with primal-dual hybrid gradient for large-scale linear programming".
-[arXiv](https://arxiv.org/abs/2102.04592)
+\[1\]: Applegate, D., Díaz, M., Lu, H., & Lubin, M. (2024). Infeasibility
+detection with primal-dual hybrid gradient for large-scale linear programming.
+SIAM Journal on Optimization, 34(1), 459-484. [See arXiv
+here](https://arxiv.org/abs/2102.04592).
 
 ## Disclaimer
 
